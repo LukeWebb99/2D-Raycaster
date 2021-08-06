@@ -53,13 +53,12 @@ int main()
 
 	sf::ContextSettings settings; settings.antialiasingLevel = 16; settings.depthBits = 24;
 	sf::RenderWindow window(sf::VideoMode(640, 720), "2D Shadows", sf::Style::Default, settings);
+	window.setFramerateLimit(60);
 
 	Shadow main(segments, sf::Vector2f(320, 180), 0);
-
+	sf::Vector2f position(250, 100);
 	while (window.isOpen())
 	{
-
-		sf::Vector2i mousepos = sf::Mouse::getPosition(window);
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -74,6 +73,19 @@ int main()
 				if (event.key.code == sf::Keyboard::Escape)
 					window.close();
 
+				if (event.key.code == sf::Keyboard::Down)
+					position.y += 2.5;
+
+				if (event.key.code == sf::Keyboard::Up)
+					position.y -= 2.5;
+
+
+				if (event.key.code == sf::Keyboard::Right)
+					position.x += 2.5;
+
+				if (event.key.code == sf::Keyboard::Left)
+					position.x -= 2.5;
+
 			default:
 				break;
 			}
@@ -84,7 +96,7 @@ int main()
 
 		main.cast();
 		main.debugLines(window);
-		main.move((sf::Vector2f)mousepos);
+		main.move(position);
 
 
 		main.draw(window);
